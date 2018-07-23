@@ -18,13 +18,13 @@ password=`/opt/aws/bin/ec2-metadata -i | awk '{print $2}'`
 /usr/libexec/mysql57/mysqladmin -u root password $password
 echo $password
 
-#Setup new database and logins for Joomla site.
+#Setup new database and logins for Wordpress site.
 DBNAME=`/opt/aws/bin/ec2-metadata -i | awk '{print $2}' | tail -c 3`
 DBUSER=`/opt/aws/bin/ec2-metadata -i | awk '{print $2}' | head -c 3`
 PASS=`openssl rand -base64 12`
-NEWDBNAME=joomla$DBNAME
+NEWDBNAME=wordpress$DBNAME
 echo $NEWDBNAME
-NEWDBUSER=joomla$DBUSER
+NEWDBUSER=wordpress$DBUSER
 
 mysql -u root -p$password -e "CREATE DATABASE ${NEWDBNAME} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
 mysql -u root -p$password -e "CREATE USER '${NEWDBUSER}'@'localhost' IDENTIFIED BY '${PASS}';"
